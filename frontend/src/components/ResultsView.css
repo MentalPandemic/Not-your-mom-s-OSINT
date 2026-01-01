@@ -1,0 +1,143 @@
+.results-view {
+  margin-top: 2rem;
+}
+
+.results-summary h2 {
+  color: #00d4ff;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: #0a0e27;
+  border-radius: 4px;
+  border: 1px solid #2d3561;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00d4ff;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+}
+
+.identities-section h3,
+.content-section h3,
+.relationships-section h3 {
+  color: #00d4ff;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.identities-list,
+.content-list,
+.relationships-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.identity-item,
+.content-item,
+.relationship-item {
+  background-color: #0a0e27;
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid #2d3561;
+  transition: border-color 0.3s ease;
+}
+
+.identity-item:hover,
+.content-item:hover,
+.relationship-item:hover {
+  border-color: #00d4ff;
+}
+
+.identity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.identity-name {
+  font-weight: 600;
+  color: #e0e0e0;
+  font-size: 1.1rem;
+}
+
+.identity-type {
+  background-color: #2d3561;
+  color: #00d4ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.content-type,
+.content-source {
+  background-color: #2d3561;
+  color: #00d4ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+.content-text {
+  color: #b0b0b0;
+  margin: 0.75rem 0;
+  line-height: 1.5;
+}
+
+.content-link {
+  color: #00d4ff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.content-link:hover {
+  text-decoration: underline;
+}
+
+.relationship-type {
+  color: #e0e0e0;
+  font-weight: 600;
+}
+
+.relationship-strength {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .summary-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .identity-header,
+  .content-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

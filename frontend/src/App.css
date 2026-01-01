@@ -1,0 +1,136 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  background: linear-gradient(135deg, #1a1f3a 0%, #2d3561 100%);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.App-header h1 {
+  color: #00d4ff;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.App-header .tagline {
+  color: #a0a0a0;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.App-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.App-footer {
+  background-color: #151932;
+  padding: 1rem;
+  text-align: center;
+  color: #606080;
+  border-top: 1px solid #2d3561;
+}
+
+/* Common component styles */
+.card {
+  background-color: #151932;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #2d3561;
+}
+
+.button {
+  background: linear-gradient(135deg, #00d4ff 0%, #0088cc 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button:disabled {
+  background: #404060;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.input {
+  background-color: #0a0e27;
+  color: #e0e0e0;
+  border: 1px solid #2d3561;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #00d4ff;
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  color: #b0b0b0;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #00d4ff;
+  font-size: 1.2rem;
+}
+
+.error {
+  background-color: #3d1f1f;
+  border: 1px solid #8b3a3a;
+  color: #ff6b6b;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.success {
+  background-color: #1f3d1f;
+  border: 1px solid #3a8b3a;
+  color: #6bff6b;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,46 @@
+.graph-visualization h3 {
+  color: #00d4ff;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.graph-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: #0a0e27;
+  border-radius: 4px;
+}
+
+.graph-stats span {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+}
+
+.graph-container {
+  min-height: 500px;
+  background-color: #0a0e27;
+  border-radius: 4px;
+  border: 1px solid #2d3561;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.graph-placeholder {
+  text-align: center;
+  padding: 2rem;
+  color: #808080;
+}
+
+.graph-placeholder p {
+  margin: 0.5rem 0;
+}
+
+.graph-info {
+  font-size: 0.9rem;
+  color: #606080;
+  max-width: 600px;
+  margin: 1rem auto 0;
+}
