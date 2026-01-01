@@ -1,0 +1,195 @@
+{
+  "adult_sites": {
+    "pornhub": {
+      "base_url": "https://www.pornhub.com",
+      "search_endpoint": "/users/{username}",
+      "max_concurrent": 5,
+      "timeout": 30,
+      "retry_attempts": 3,
+      "confidence_threshold": 0.8,
+      "selectors": {
+        "username": ".username",
+        "profile_url": ".profileUrl",
+        "bio": ".bioText",
+        "join_date": ".joinDate",
+        "profile_image": ".profileImage img",
+        "social_links": ".socialLinks a"
+      }
+    },
+    "xhamster": {
+      "base_url": "https://xhamster.com",
+      "search_endpoint": "/users/{username}",
+      "max_concurrent": 5,
+      "timeout": 30,
+      "retry_attempts": 3,
+      "confidence_threshold": 0.7,
+      "selectors": {
+        "username": ".user-name",
+        "profile_url": ".user-profile-url",
+        "bio": ".user-bio",
+        "join_date": ".user-join-date",
+        "profile_image": ".user-avatar img"
+      }
+    },
+    "motherless": {
+      "base_url": "https://motherless.com",
+      "search_endpoint": "/user/{username}",
+      "max_concurrent": 3,
+      "timeout": 25,
+      "retry_attempts": 2,
+      "confidence_threshold": 0.75,
+      "selectors": {
+        "username": ".username",
+        "profile_url": ".profile-link",
+        "bio": ".user-description",
+        "join_date": ".member-since",
+        "profile_image": ".avatar img"
+      }
+    },
+    "redtube": {
+      "base_url": "https://www.redtube.com",
+      "search_endpoint": "/profile/{username}",
+      "max_concurrent": 4,
+      "timeout": 20,
+      "retry_attempts": 3,
+      "confidence_threshold": 0.85,
+      "selectors": {
+        "username": ".profile-username",
+        "profile_url": ".profile-link",
+        "bio": ".profile-bio",
+        "join_date": ".profile-join-date",
+        "profile_image": ".profile-avatar img"
+      }
+    },
+    "xvideos": {
+      "base_url": "https://www.xvideos.com",
+      "search_endpoint": "/profiles/{username}",
+      "max_concurrent": 5,
+      "timeout": 30,
+      "retry_attempts": 3,
+      "confidence_threshold": 0.8,
+      "selectors": {
+        "username": ".profile-username",
+        "profile_url": ".profile-url",
+        "bio": ".profile-description",
+        "join_date": ".profile-date",
+        "profile_image": ".profile-avatar img"
+      }
+    },
+    "fetlife": {
+      "base_url": "https://fetlife.com",
+      "search_endpoint": "/users/{username}",
+      "max_concurrent": 3,
+      "timeout": 25,
+      "retry_attempts": 2,
+      "confidence_threshold": 0.9,
+      "selectors": {
+        "username": ".user-name",
+        "profile_url": ".user-profile-link",
+        "bio": ".user-bio",
+        "join_date": ".user-join-date",
+        "profile_image": ".user-avatar img",
+        "social_links": ".social-media-links a"
+      }
+    },
+    "onlyfans": {
+      "base_url": "https://onlyfans.com",
+      "search_endpoint": "/{username}",
+      "max_concurrent": 2,
+      "timeout": 20,
+      "retry_attempts": 3,
+      "confidence_threshold": 0.95,
+      "selectors": {
+        "username": ".profile-username",
+        "profile_url": ".profile-url",
+        "bio": ".profile-bio",
+        "join_date": ".profile-join-date",
+        "profile_image": ".profile-avatar img",
+        "social_links": ".social-links a"
+      }
+    }
+  },
+  "personals_sites": {
+    "skipthegames": {
+      "base_url": "https://www.skipthegames.com",
+      "search_endpoint": "/search/{location}",
+      "max_concurrent": 5,
+      "timeout": 30,
+      "retry_attempts": 3,
+      "confidence_threshold": 0.8,
+      "selectors": {
+        "post_title": ".post-title",
+        "post_content": ".post-content",
+        "phone_number": ".phone-number",
+        "email": ".email",
+        "location": ".location",
+        "post_date": ".post-date",
+        "images": ".post-images img"
+      }
+    },
+    "bedpage": {
+      "base_url": "https://www.bedpage.com",
+      "search_endpoint": "/search/{category}/{location}",
+      "max_concurrent": 5,
+      "timeout": 30,
+      "retry_attempts": 3,
+      "confidence_threshold": 0.75,
+      "selectors": {
+        "post_title": ".listing-title",
+        "post_content": ".listing-description",
+        "phone_number": ".phone",
+        "email": ".email",
+        "location": ".location",
+        "post_date": ".posted-date",
+        "images": ".listing-images img"
+      }
+    },
+    "craigslist": {
+      "base_url": "https://www.craigslist.org",
+      "search_endpoint": "/search/{category}",
+      "max_concurrent": 4,
+      "timeout": 25,
+      "retry_attempts": 2,
+      "confidence_threshold": 0.85,
+      "selectors": {
+        "post_title": ".posting-title",
+        "post_content": ".posting-body",
+        "phone_number": ".phone",
+        "email": ".reply-email",
+        "location": ".posting-location",
+        "post_date": ".posting-date",
+        "images": ".posting-images img"
+      }
+    },
+    "doublelist": {
+      "base_url": "https://www.doublelist.com",
+      "search_endpoint": "/search/{location}",
+      "max_concurrent": 3,
+      "timeout": 20,
+      "retry_attempts": 3,
+      "confidence_threshold": 0.9,
+      "selectors": {
+        "post_title": ".listing-title",
+        "post_content": ".listing-description",
+        "phone_number": ".contact-phone",
+        "email": ".contact-email",
+        "location": ".listing-location",
+        "post_date": ".listing-date",
+        "images": ".listing-images img"
+      }
+    }
+  },
+  "general_settings": {
+    "user_agent_rotation": true,
+    "max_concurrent_requests": 10,
+    "request_timeout": 30,
+    "retry_attempts": 3,
+    "retry_delay": 5,
+    "rate_limit": 100,
+    "rate_limit_window": 60,
+    "log_level": "INFO",
+    "data_freshness_days": 7,
+    "proxy_rotation": false,
+    "proxy_list": []
+  }
+}
