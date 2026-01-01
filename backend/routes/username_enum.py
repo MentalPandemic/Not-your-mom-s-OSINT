@@ -45,28 +45,24 @@ class RateLimitError(HTTPException):
         )
 
 
-def get_username_service() -> UsernameEnumerationService:
+def get_username_service(request: Request) -> UsernameEnumerationService:
     """Dependency to get username enumeration service"""
-    from ..main import app
-    return app.state.username_service
+    return request.app.state.username_service
 
 
-def get_cache_manager() -> CacheManager:
+def get_cache_manager(request: Request) -> CacheManager:
     """Dependency to get cache manager"""
-    from ..main import app
-    return app.state.cache_manager
+    return request.app.state.cache_manager
 
 
-def get_db_manager() -> DatabaseManager:
+def get_db_manager(request: Request) -> DatabaseManager:
     """Dependency to get database manager"""
-    from ..main import app
-    return app.state.db_manager
+    return request.app.state.db_manager
 
 
-def get_rate_limiter_instance():
+def get_rate_limiter_instance(request: Request):
     """Dependency to get rate limiter"""
-    from ..main import app
-    return app.state.rate_limiter
+    return request.app.state.rate_limiter
 
 
 async def check_rate_limit(
@@ -83,6 +79,16 @@ async def check_rate_limit(
     return True
 
 
+def rate_limit(endpoint: str):
+    """Factory for rate limit dependencies"""
+    async def _rate_limit_check(
+        request: Request,
+        rate_limiter=Depends(get_rate_limiter_instance)
+    ) -> bool:
+        return await check_rate_limit(request, endpoint, rate_limiter)
+    return _rate_limit_check
+
+
 @router.post("/api/search/username", response_model=SearchResponse)
 async def search_username(
     request: Request,
@@ -92,7 +98,7 @@ async def search_username(
     username_service: UsernameEnumerationService = Depends(get_username_service),
     cache_manager: CacheManager = Depends(get_cache_manager),
     db_manager: DatabaseManager = Depends(get_db_manager),
-    rate_ok: bool = Depends(lambda req: check_rate_limit(req, "/api/search/username"))
+    rate_ok: bool = Depends(rate_limit("/api/search/username"))
 ):
     """
     Primary endpoint for username enumeration.

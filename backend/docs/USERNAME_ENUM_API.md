@@ -683,6 +683,34 @@ GET /
 
 ---
 
+## Core Platform Integration
+
+### 1. General Search
+
+Unified search endpoint that delegates to specific modules.
+
+```http
+POST /api/search
+```
+
+#### Request Body
+```json
+{
+  "query": "johndoe",
+  "search_type": "all"
+}
+```
+
+### 2. General Results
+
+Get aggregated results for a specific query from all modules.
+
+```http
+GET /api/results?query=johndoe
+```
+
+---
+
 ## Error Responses
 
 ### Error Response Format

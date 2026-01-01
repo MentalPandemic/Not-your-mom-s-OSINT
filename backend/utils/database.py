@@ -64,12 +64,12 @@ class PostgreSQLManager:
                 execution_time_ms INTEGER NOT NULL,
                 ip_address INET,
                 user_agent TEXT,
-                created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-                INDEX idx_search_type (search_type),
-                INDEX idx_created_at (created_at),
-                INDEX idx_ip_address (ip_address)
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
             )
         """)
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_search_type ON search_queries (search_type)")
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_created_at ON search_queries (created_at)")
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_ip_address ON search_queries (ip_address)")
         
         # Search results table
         await conn.execute("""
@@ -82,14 +82,14 @@ class PostgreSQLManager:
                 confidence FLOAT NOT NULL,
                 match_type VARCHAR(20) NOT NULL,
                 metadata JSONB,
-                discovered_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-                INDEX idx_query_id (query_id),
-                INDEX idx_username (username),
-                INDEX idx_platform (platform),
-                INDEX idx_confidence (confidence),
-                INDEX idx_discovered_at (discovered_at)
+                discovered_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
             )
         """)
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_query_id ON search_results (query_id)")
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_username ON search_results (username)")
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_platform ON search_results (platform)")
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_confidence ON search_results (confidence)")
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_discovered_at ON search_results (discovered_at)")
         
         # Identities table for linking profiles
         await conn.execute("""
@@ -102,12 +102,12 @@ class PostgreSQLManager:
                 first_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
                 last_updated TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
                 metadata JSONB,
-                INDEX idx_primary_username (primary_username),
-                INDEX idx_email (email),
-                INDEX idx_phone (phone),
                 UNIQUE (primary_username)
             )
         """)
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_primary_username ON identities (primary_username)")
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_email ON identities (email)")
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_phone ON identities (phone)")
         
         # Identity links table for relationships
         await conn.execute("""
@@ -121,12 +121,12 @@ class PostgreSQLManager:
                 first_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
                 last_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
                 metadata JSONB,
-                INDEX idx_identity_id (identity_id),
-                INDEX idx_linked_username (linked_username),
-                INDEX idx_platform (platform),
                 UNIQUE (identity_id, linked_username, platform)
             )
         """)
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_identity_id ON identity_links (identity_id)")
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_linked_username ON identity_links (linked_username)")
+        await conn.execute("CREATE INDEX IF NOT EXISTS idx_platform ON identity_links (platform)")
         
         # Analytics table for usage statistics
         await conn.execute("""

@@ -9,6 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 
 from .routes.username_enum import router as username_enum_router
+from .routes.search import router as search_router
+from .routes.results import router as results_router
 from .services.username_enum_service import UsernameEnumerationService
 from .utils.cache import CacheManager
 from .utils.rate_limiter import get_rate_limiter
@@ -174,6 +176,8 @@ def create_app() -> FastAPI:
     
     # Include routers
     app.include_router(username_enum_router)
+    app.include_router(search_router)
+    app.include_router(results_router)
     
     # Root endpoint
     @app.get("/")
