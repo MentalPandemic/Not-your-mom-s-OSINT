@@ -1,0 +1,30 @@
+# Optional dependency set for the social media integration backend.
+# In minimal environments, code is written to import safely even when these are absent.
+
+fastapi>=0.110
+uvicorn[standard]>=0.25
+pydantic>=2
+
+# HTTP / scraping
+aiohttp>=3.9
+beautifulsoup4>=4.12
+selenium>=4.15
+
+# Official SDKs
+praw>=7.7
+tweepy>=4.14
+instagrapi>=2.0
+
+# Persistence
+sqlalchemy>=2.0
+asyncpg>=0.29
+
+# Neo4j
+neo4j>=5.15
+
+# Config / crypto
+python-dotenv>=1.0
+cryptography>=41
+
+# Misc
+furl>=2.1
