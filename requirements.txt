@@ -1,0 +1,12 @@
+PyGithub
+requests
+aiohttp
+SQLAlchemy
+aiopg
+neo4j
+fastapi
+uvicorn
+pydantic
+python-dotenv
+pytest
+pytest-asyncio
