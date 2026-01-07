@@ -1,0 +1,16 @@
+{
+  "output_format": "json",
+  "verbose_logging": false,
+  "results_path": "./results",
+  "sherlock_enabled": false,
+  "api_keys": {
+    "twitter": "",
+    "facebook": "",
+    "linkedin": "",
+    "instagram": ""
+  },
+  "auto_updates": false,
+  "notification_email": "",
+  "advanced_features": false,
+  "setup_complete": false
+}
