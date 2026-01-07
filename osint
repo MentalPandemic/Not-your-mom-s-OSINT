@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+"""
+Entry point script for Not-your-mom's-OSINT CLI.
+"""
+
+import sys
+from pathlib import Path
+
+# Add src to Python path
+src_path = Path(__file__).parent / "src"
+sys.path.insert(0, str(src_path))
+
+try:
+    from osint.cli import cli
+except ImportError as e:
+    print(f"Error importing OSINT modules: {e}")
+    print("Make sure you're running this from the project root directory.")
+    sys.exit(1)
+
+
+if __name__ == '__main__':
+    cli()
