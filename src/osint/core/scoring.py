@@ -72,10 +72,10 @@ class ConfidenceScoring:
         avg_confidence = sum(r.confidence for r in relationships) / len(relationships)
 
         # Adjust based on number of relationships (more relationships = higher confidence)
-        relationship_factor = min(1.0, len(relationships) / 10.0)
+        relationship_factor = min(1.0, len(relationships) / 2.0)
 
         # Adjust based on number of entities (more entities = slightly lower confidence)
-        entity_factor = max(0.7, 1.0 - (len(entities) - 3) * 0.05)
+        entity_factor = max(0.9, 1.0 - (len(entities) - 2) * 0.02)
 
         final_confidence = avg_confidence * relationship_factor * entity_factor
 
