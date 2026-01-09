@@ -90,6 +90,30 @@ Skip setup wizard on first run:
 osint --skip-setup
 ```
 
+## Username Enumeration (Sherlock)
+
+Search for a username across 400+ sites supported by the Sherlock project:
+
+```bash
+# Basic search (uses enabled sources)
+osint search --username john_doe
+
+# Search multiple usernames
+osint search --username john_doe,jane_smith
+
+# Filter by category/tag (if supported by the Sherlock site database)
+osint search --username john_doe --category social-media
+
+# Search specific sites only
+osint search --username john_doe --sites twitter,github,linkedin
+
+# Export results
+osint search --username john_doe --export json --output ./results/john_doe.json
+
+# Open found profiles in browser
+osint search --username john_doe --browser
+```
+
 ## Development
 
 Run tests:
