@@ -2,12 +2,25 @@ from __future__ import annotations
 
 import json
 from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 import networkx as nx
 
 from osint.core.models import Entity, Relationship, RelationshipType
+
+
+def _serialize_value(value: Any) -> Any:
+    """Serialize a value for JSON storage."""
+    if isinstance(value, datetime):
+        return value.isoformat()
+    return value
+
+
+def _serialize_attributes(attributes: dict[str, Any]) -> dict[str, Any]:
+    """Serialize attributes for JSON storage."""
+    return {k: _serialize_value(v) for k, v in attributes.items()}
 
 
 class RelationshipGraph:
@@ -23,7 +36,7 @@ class RelationshipGraph:
             entity.id,
             type=entity.type.value,
             name=entity.name,
-            attributes=json.dumps(entity.attributes),
+            attributes=json.dumps(_serialize_attributes(entity.attributes)),
             sources=json.dumps(entity.sources),
         )
         self._entities[entity.id] = entity

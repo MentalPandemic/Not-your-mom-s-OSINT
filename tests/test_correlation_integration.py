@@ -366,7 +366,7 @@ class TestCorrelationIntegration:
             with json_path.open() as f:
                 data = json.load(f)
                 assert "nodes" in data
-                assert "links" in data
+                assert "edges" in data
 
     def test_path_finding(self, correlation_engine, complex_query_results):
         """Test finding paths between entities."""

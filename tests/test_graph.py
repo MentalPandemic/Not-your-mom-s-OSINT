@@ -224,7 +224,7 @@ class TestRelationshipGraph:
             with path.open() as f:
                 data = json.load(f)
                 assert "nodes" in data
-                assert "links" in data
+                assert "edges" in data
 
     def test_get_statistics(self, populated_graph):
         """Test getting graph statistics."""
