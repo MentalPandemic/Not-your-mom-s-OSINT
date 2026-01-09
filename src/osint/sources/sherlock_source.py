@@ -36,9 +36,17 @@ def _load_sherlock_site_data() -> dict[str, Any]:
     try:
         import importlib.resources
 
-        import sherlock  # noqa: F401
+        try:
+            import sherlock  # noqa: F401
+        except ModuleNotFoundError:
+            import sherlock_project  # noqa: F401
 
         candidates: list[tuple[str, str]] = [
+            ("sherlock_project.resources", "data.json"),
+            ("sherlock_project.resources", "sites.json"),
+            ("sherlock_project", "sites.json"),
+            ("sherlock_project", "resources/data.json"),
+            ("sherlock_project", "resources/sites.json"),
             ("sherlock.resources", "data.json"),
             ("sherlock.resources", "sites.json"),
             ("sherlock", "sites.json"),
@@ -51,7 +59,8 @@ def _load_sherlock_site_data() -> dict[str, Any]:
                 payload = importlib.resources.files(pkg).joinpath(resource).read_text(encoding="utf-8")
                 data = json.loads(payload)
                 if isinstance(data, dict) and data:
-                    return data
+                    # Filter out non-dict entries like $schema
+                    return {k: v for k, v in data.items() if isinstance(v, dict)}
             except Exception:
                 continue
 
@@ -124,6 +133,8 @@ class SherlockSource(DataSource):
     def available_categories(self) -> list[str]:
         categories: set[str] = set()
         for site in self._ensure_site_data().values():
+            if not isinstance(site, dict):
+                continue
             tags = site.get("tags") or []
             if isinstance(tags, str):
                 tags = [tags]
@@ -154,6 +165,9 @@ class SherlockSource(DataSource):
 
         out: list[str] = []
         for name, site in data.items():
+            if not isinstance(site, dict):
+                continue
+
             if requested and name.lower() not in requested:
                 continue
 
@@ -208,6 +222,9 @@ class SherlockSource(DataSource):
 
         def submit(site_name: str, username: str, attempt: int) -> None:
             site = data[site_name]
+            if not isinstance(site, dict):
+                site = {}
+
             url_template = str(site.get("url") or "")
             url = _format_template(url_template, username)
 
