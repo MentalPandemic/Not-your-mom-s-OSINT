@@ -104,6 +104,174 @@ def prompt_social_media_api_keys(existing: dict[str, str] | None) -> dict[str, s
     return updated
 
 
+def prompt_twitter_config(existing: dict[str, Any] | None) -> dict[str, Any]:
+    """Prompt for Twitter-specific configuration."""
+    existing = existing or {}
+    click.echo("\nTwitter/X Configuration:")
+
+    configure = _confirm("Configure Twitter API now?", default=bool(existing.get("enabled")))
+    if not configure:
+        return {"enabled": False}
+
+    bearer_token = click.prompt(
+        "Bearer Token",
+        type=str,
+        default=existing.get("bearer_token", ""),
+        show_default=False,
+    ).strip()
+
+    return {
+        "enabled": bool(bearer_token),
+        "bearer_token": bearer_token,
+        "api_version": "v2",
+        "rate_limit": 450,
+    }
+
+
+def prompt_facebook_config(existing: dict[str, Any] | None) -> dict[str, Any]:
+    """Prompt for Facebook-specific configuration."""
+    existing = existing or {}
+    click.echo("\nFacebook Configuration:")
+
+    configure = _confirm("Configure Facebook API now?", default=bool(existing.get("enabled")))
+    if not configure:
+        return {"enabled": False}
+
+    access_token = click.prompt(
+        "Access Token",
+        type=str,
+        default=existing.get("access_token", ""),
+        show_default=False,
+    ).strip()
+
+    return {
+        "enabled": bool(access_token),
+        "access_token": access_token,
+        "rate_limit": 200,
+    }
+
+
+def prompt_linkedin_config(existing: dict[str, Any] | None) -> dict[str, Any]:
+    """Prompt for LinkedIn-specific configuration."""
+    existing = existing or {}
+    click.echo("\nLinkedIn Configuration:")
+
+    configure = _confirm("Configure LinkedIn API now?", default=bool(existing.get("enabled")))
+    if not configure:
+        return {"enabled": False}
+
+    username = click.prompt(
+        "LinkedIn Username",
+        type=str,
+        default=existing.get("username", ""),
+        show_default=False,
+    ).strip()
+
+    password = click.prompt(
+        "LinkedIn Password",
+        type=str,
+        default=existing.get("password", ""),
+        show_default=False,
+        hide_input=True,
+    ).strip()
+
+    return {
+        "enabled": bool(username and password),
+        "username": username,
+        "password": password,
+        "rate_limit": 100,
+    }
+
+
+def prompt_instagram_config(existing: dict[str, Any] | None) -> dict[str, Any]:
+    """Prompt for Instagram-specific configuration."""
+    existing = existing or {}
+    click.echo("\nInstagram Configuration:")
+
+    configure = _confirm("Configure Instagram API now?", default=bool(existing.get("enabled")))
+    if not configure:
+        return {"enabled": False}
+
+    session_id = click.prompt(
+        "Session ID (recommended) or Username",
+        type=str,
+        default=existing.get("session_id", ""),
+        show_default=False,
+    ).strip()
+
+    if session_id and len(session_id) > 50:
+        return {
+            "enabled": True,
+            "session_id": session_id,
+            "rate_limit": 200,
+        }
+
+    username = click.prompt(
+        "Username",
+        type=str,
+        default=existing.get("username", ""),
+        show_default=False,
+    ).strip()
+
+    password = click.prompt(
+        "Password",
+        type=str,
+        default=existing.get("password", ""),
+        show_default=False,
+        hide_input=True,
+    ).strip()
+
+    return {
+        "enabled": bool(username and password),
+        "username": username,
+        "password": password,
+        "rate_limit": 200,
+    }
+
+
+def prompt_social_media_config(existing: dict[str, dict[str, Any]] | None) -> dict[str, dict[str, Any]]:
+    """Prompt for comprehensive social media configuration."""
+    configure = _confirm("Would you like to configure social media APIs now?", default=False)
+    if not configure:
+        return existing or {}
+
+    existing = existing or {}
+
+    return {
+        "twitter": prompt_twitter_config(existing.get("twitter")),
+        "facebook": prompt_facebook_config(existing.get("facebook")),
+        "linkedin": prompt_linkedin_config(existing.get("linkedin")),
+        "instagram": prompt_instagram_config(existing.get("instagram")),
+    }
+
+
+def prompt_caching_config(existing: dict[str, Any] | None) -> dict[str, Any]:
+    """Prompt for caching configuration."""
+    existing = existing or {}
+    click.echo("\nCaching Configuration:")
+
+    enabled = _confirm("Enable response caching?", default=existing.get("enabled", True))
+
+    backend = "file"
+    if enabled:
+        backend = click.prompt(
+            "Cache backend",
+            type=click.Choice(["file"], case_sensitive=False),
+            default="file",
+            show_default=False,
+        )
+
+    return {
+        "enabled": enabled,
+        "backend": backend,
+        "ttl": {
+            "profile": 86400,
+            "posts": 604800,
+            "followers": 86400,
+        },
+    }
+
+
 def prompt_auto_updates(current: bool) -> bool:
     return _confirm("Would you like to enable automatic updates for OSINT sources?", default=current)
 
@@ -199,6 +367,12 @@ def run_setup_wizard() -> dict[str, Any]:
     click.echo()
 
     config["api_keys"] = prompt_social_media_api_keys(config.get("api_keys"))
+    click.echo()
+
+    config["social_media"] = prompt_social_media_config(config.get("social_media"))
+    click.echo()
+
+    config["caching"] = prompt_caching_config(config.get("caching"))
     click.echo()
 
     config["auto_updates"] = prompt_auto_updates(bool(config.get("auto_updates", True)))

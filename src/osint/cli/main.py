@@ -4,7 +4,17 @@ import json
 
 import click
 
-from osint.cli.commands import correlate, graph, relationships, search
+from osint.cli.commands import (
+    analyze_cmd,
+    compare_cmd,
+    correlate,
+    followers_cmd,
+    graph,
+    posts_cmd,
+    profile_cmd,
+    relationships,
+    search,
+)
 from osint.cli.setup_wizard import run_setup_wizard
 from osint.utils.config_manager import is_setup_complete, read_config, reset_config
 
@@ -58,3 +68,8 @@ cli.add_command(search)
 cli.add_command(correlate)
 cli.add_command(graph)
 cli.add_command(relationships)
+cli.add_command(profile_cmd, name="profile")
+cli.add_command(posts_cmd, name="posts")
+cli.add_command(followers_cmd, name="followers")
+cli.add_command(analyze_cmd, name="analyze")
+cli.add_command(compare_cmd, name="compare")
