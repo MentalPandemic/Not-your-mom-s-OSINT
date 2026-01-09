@@ -4,7 +4,7 @@ import json
 
 import click
 
-from osint.cli.commands import search
+from osint.cli.commands import correlate, graph, relationships, search
 from osint.cli.setup_wizard import run_setup_wizard
 from osint.utils.config_manager import is_setup_complete, read_config, reset_config
 
@@ -55,3 +55,6 @@ def config_cmd(show: bool, reset: bool) -> None:
 
 
 cli.add_command(search)
+cli.add_command(correlate)
+cli.add_command(graph)
+cli.add_command(relationships)
