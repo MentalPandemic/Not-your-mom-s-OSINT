@@ -33,3 +33,17 @@ def get_config_path() -> Path:
         return local_config
 
     return get_home_config_path()
+
+
+def resolve_results_dir(results_path: str, cwd: Path | None = None) -> Path:
+    """Resolve a results directory path.
+
+    - Expands '~'
+    - Resolves relative paths against cwd (defaults to Path.cwd())
+    """
+
+    base = cwd or Path.cwd()
+    path = Path(results_path or "./results").expanduser()
+    if not path.is_absolute():
+        path = base / path
+    return path

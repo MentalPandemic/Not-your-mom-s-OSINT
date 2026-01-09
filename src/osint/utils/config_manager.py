@@ -28,6 +28,12 @@ def default_config() -> dict[str, Any]:
         "verbose_logging": False,
         "results_path": "./results",
         "sherlock_enabled": False,
+        "sherlock": {
+            "timeout": 10,
+            "threads": 10,
+            "retries": 3,
+            "no_nsfw": False,
+        },
         "api_keys": {
             "twitter": "",
             "facebook": "",
@@ -124,6 +130,12 @@ def update_config(updates: dict[str, Any], path: str | Path | None = None) -> di
         api_keys = current.get("api_keys", {})
         api_keys.update(updates["api_keys"])
         updates = {**updates, "api_keys": api_keys}
+
+    if "sherlock" in updates and isinstance(updates["sherlock"], dict):
+        sherlock_cfg = current.get("sherlock", {})
+        if isinstance(sherlock_cfg, dict):
+            sherlock_cfg.update(updates["sherlock"])
+            updates = {**updates, "sherlock": sherlock_cfg}
 
     current.update(updates)
 
