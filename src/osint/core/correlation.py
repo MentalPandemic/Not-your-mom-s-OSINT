@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -24,6 +23,7 @@ from osint.core.models import (
 )
 from osint.core.reports import ReportGenerator
 from osint.core.scoring import ConfidenceScoring
+from osint.utils.file_handler import FileHandler
 
 
 class CorrelationEngine:
@@ -399,9 +399,8 @@ class CorrelationEngine:
         return "\n".join(lines)
 
     def load_from_file(self, path: Path) -> None:
-        """Load correlation data from a file."""
-        with path.open("r") as f:
-            data = json.load(f)
+        """Load correlation data from a file using FileHandler utility."""
+        data = FileHandler.read_json(path)
 
         # Load entities
         for entity_data in data.get("entities", []):
@@ -431,7 +430,7 @@ class CorrelationEngine:
             self.graph.add_relationship(rel)
 
     def save_to_file(self, path: Path) -> None:
-        """Save correlation data to a file."""
+        """Save correlation data to a file using FileHandler utility."""
         data = {
             "entities": [e.to_dict() for e in self._entities.values()],
             "relationships": [r.to_dict() for r in self._relationships],
@@ -443,5 +442,4 @@ class CorrelationEngine:
             ],
         }
 
-        with path.open("w") as f:
-            json.dump(data, f, indent=2)
+        FileHandler.write_json(data, path)

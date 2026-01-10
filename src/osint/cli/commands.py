@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import csv
 import json
 import webbrowser
 from datetime import datetime, timezone
@@ -22,6 +21,7 @@ from osint.core.models import (
 )
 from osint.utils.config import resolve_results_dir
 from osint.utils.config_manager import read_config
+from osint.utils.file_handler import FileHandler
 
 
 def _utc_ts() -> str:
@@ -29,37 +29,25 @@ def _utc_ts() -> str:
 
 
 def _write_json(path: Path, payload: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    """Write JSON data using FileHandler utility."""
+    FileHandler.write_json(payload, path)
 
 
 def _write_csv(path: Path, results: list[QueryResult]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-
-    with path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=[
-                "username",
-                "platform_name",
-                "profile_url",
-                "status",
-                "response_time",
-                "metadata",
-            ],
-        )
-        writer.writeheader()
-        for r in results:
-            writer.writerow(
-                {
-                    "username": r.username,
-                    "platform_name": r.platform_name,
-                    "profile_url": r.profile_url or "",
-                    "status": r.status.value,
-                    "response_time": r.response_time if r.response_time is not None else "",
-                    "metadata": json.dumps(r.metadata, sort_keys=True),
-                }
-            )
+    """Write CSV data using FileHandler utility."""
+    # Convert QueryResult objects to dictionaries
+    data = [
+        {
+            "username": r.username,
+            "platform_name": r.platform_name,
+            "profile_url": r.profile_url or "",
+            "status": r.status.value,
+            "response_time": r.response_time if r.response_time is not None else "",
+            "metadata": json.dumps(r.metadata, sort_keys=True),
+        }
+        for r in results
+    ]
+    FileHandler.write_csv(data, path)
 
 
 def _resolve_output_paths(
