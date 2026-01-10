@@ -9,6 +9,7 @@ from typing import Any
 import networkx as nx
 
 from osint.core.models import Entity, Relationship, RelationshipType
+from osint.utils.file_handler import FileHandler
 
 
 def _serialize_value(value: Any) -> Any:
@@ -176,12 +177,11 @@ class RelationshipGraph:
         nx.write_gexf(self.graph, path)
 
     def export_json(self, path: Path) -> None:
-        """Export graph to JSON format."""
+        """Export graph to JSON format using FileHandler utility."""
         from networkx.readwrite import json_graph
 
         data = json_graph.node_link_data(self.graph)
-        with path.open("w") as f:
-            json.dump(data, f, indent=2)
+        FileHandler.write_json(data, path)
 
     def get_statistics(self) -> dict[str, Any]:
         """Get graph statistics."""
