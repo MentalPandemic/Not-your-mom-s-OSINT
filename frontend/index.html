@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Comprehensive OSINT Intelligence Dashboard - Advanced open-source intelligence aggregation platform for researchers and analysts" />
+    <meta name="keywords" content="OSINT, intelligence, investigation, research, analysis, dashboard, security" />
+    <meta name="author" content="OSINT Dashboard Team" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="OSINT Dashboard - Intelligence Aggregation Platform" />
+    <meta property="og:description" content="Advanced open-source intelligence aggregation platform for researchers and analysts" />
+    <meta property="og:image" content="/og-image.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="OSINT Dashboard - Intelligence Aggregation Platform" />
+    <meta property="twitter:description" content="Advanced open-source intelligence aggregation platform for researchers and analysts" />
+    <meta property="twitter:image" content="/og-image.png" />
+    
+    <!-- Theme color -->
+    <meta name="theme-color" content="#3b82f6" />
+    
+    <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <title>OSINT Dashboard - Intelligence Aggregation Platform</title>
+    
+    <style>
+      /* Critical CSS for loading screen */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #f9fafb;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      
+      .dark .loading-screen {
+        background: #111827;
+        color: #f9fafb;
+      }
+      
+      .loading-logo {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        animation: pulse 2s infinite;
+      }
+      
+      .loading-text {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      
+      .loading-subtitle {
+        font-size: 16px;
+        opacity: 0.7;
+        margin-bottom: 32px;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e5e7eb;
+        border-top: 4px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+      
+      /* Hide loading screen when app is ready */
+      .app-ready .loading-screen {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-screen">
+      <div class="loading-logo">
+        <span style="color: white; font-weight: bold; font-size: 24px;">OS</span>
+      </div>
+      <div class="loading-text">OSINT Dashboard</div>
+      <div class="loading-subtitle">Intelligence Aggregation Platform</div>
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <div id="root"></div>
+    
+    <script>
+      // Remove loading screen when React app is ready
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.body.classList.add('app-ready');
+        }, 1000);
+      });
+      
+      // Theme detection and application
+      (function() {
+        const theme = localStorage.getItem('theme') || 'light';
+        if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+      
+      // PWA service worker registration
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').catch(function() {
+            console.log('Service worker registration failed');
+          });
+        });
+      }
+    </script>
+    
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
